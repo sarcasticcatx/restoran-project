@@ -19,7 +19,7 @@ namespace restoran_project.Service
             _configuration = configuration;
         }
 
-        // 1. Регистрација
+        // register
         public async Task<IdentityResult> RegisterUserAsync(RegisterDto dto)
         {
             var user = new User
@@ -34,7 +34,7 @@ namespace restoran_project.Service
             return await _userManager.CreateAsync(user, dto.Password);
         }
 
-        // 2. Логин и JWT
+        // login so jwt
         public async Task<string?> LoginUserAsync(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -64,7 +64,7 @@ namespace restoran_project.Service
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        // 3. Земање на сите корисници (СРЕДЕНО!)
+        // get all users
         public async Task<List<User>> GetAllUsersAsync()
         {
             return await _userManager.Users.ToListAsync();

@@ -17,7 +17,6 @@ namespace restoran_project.Controllers
         }
 
         // GET: api/menus
-        // Враќа ги сите менија заедно со името на категоријата
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Menu>>> GetMenus()
         {
@@ -43,7 +42,6 @@ namespace restoran_project.Controllers
         }
 
         // GET: api/menus/category/2
-        // Ова е супер за фронтендот за филтрирање по категорија (на пр. сите пијалоци)
         [HttpGet("category/{categoryId}")]
         public async Task<ActionResult<IEnumerable<Menu>>> GetMenusByCategory(int categoryId)
         {
@@ -57,7 +55,7 @@ namespace restoran_project.Controllers
         [HttpPost]
         public async Task<ActionResult<Menu>> CreateMenu(Menu menu)
         {
-            // Проверка дали постои категоријата пред да се сними
+            
             var categoryExists = await _context.Categories.AnyAsync(c => c.CategoryId == menu.CategoryId);
             if (!categoryExists)
             {

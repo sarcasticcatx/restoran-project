@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace restoran_project.Models
 {
@@ -17,7 +16,7 @@ namespace restoran_project.Models
         [JsonIgnore]
         public Menu? Menu { get; set; }
 
-        public int Rating { get; set; } // на пр. од 1 до 5
+        public int Rating { get; set; } 
         public string Comment { get; set; } = string.Empty;
         public DateTime Created { get; set; } = DateTime.UtcNow;
     }

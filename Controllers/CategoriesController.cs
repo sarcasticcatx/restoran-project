@@ -42,9 +42,9 @@ namespace restoran_project.Controllers
         public async Task<ActionResult<Category>> CreateCategory(Category category)
         {
             _context.Categories.Add(category);
-            await _context.SaveChangesAsync(); // Тука PostgreSQL/Neon автоматски му доделува CategoryId (1, 2, 3...)
+            await _context.SaveChangesAsync(); 
 
-            // Го враќаме објектот директно со новиот CategoryId
+            
             return CreatedAtAction(nameof(GetCategory), new { id = category.CategoryId }, category);
         }
 

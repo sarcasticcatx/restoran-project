@@ -22,8 +22,7 @@ namespace restoran_project.Models
         [Required]
         public int CategoryId { get; set; }
 
-        // Navigation property
-        // [JsonIgnore] спречува Circular Reference грешка при JSON серијализација
+        
         [JsonIgnore]
         public Category? Category { get; set; }
     }

@@ -9,10 +9,10 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Контролери
+// kontrolerite
 builder.Services.AddControllers();
 
-// 1.1. CORS Поддршка (За фронтендот да може да пристапи до API-то)
+// cors
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
@@ -24,11 +24,11 @@ builder.Services.AddCors(options =>
         });
 });
 
-// 2. База (Neon / PostgreSQL)
+//  baza
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 3. Identity
+//  za user
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequireDigit = false;
@@ -39,7 +39,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-// 4. JWT Автентикација
+// JWT tokeni
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -60,16 +60,16 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// 5. Сервиси
+// servisite
 builder.Services.AddScoped<UserService>();
 
-// 6. Обичен Swagger
+// da testiram u swager
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// 7. Middleware / Pipeline
+// middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -85,16 +85,16 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-// Вклучување на CORS пред автентикација и рутирање
+
 app.UseCors("AllowFrontend");
 
 app.UseRouting();
 
-// 8. Автентикација и Авторизација (Редоследот е задолжителен!)
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-// 9. Мапирање на контролери
+
 app.MapControllers();
 
 app.Run();

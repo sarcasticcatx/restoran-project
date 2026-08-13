@@ -17,7 +17,6 @@ namespace restoran_project.Controllers
         }
 
         // GET: api/orders
-        // Ги враќа сите нарачки заедно со нивните артикли и корисникот (За Админ панел)
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
@@ -30,7 +29,6 @@ namespace restoran_project.Controllers
         }
 
         // GET: api/orders/user/5
-        // Ги враќа сите нарачки за конкретен корисник (За историја на нарачки на фронтенд)
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<Order>>> GetUserOrders(string userId)
         {
