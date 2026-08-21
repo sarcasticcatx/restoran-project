@@ -1,0 +1,59 @@
+<div class="container">
+  <h1>Your cart</h1>
+
+  @if (cart.items().length === 0) {
+    <div class="empty-state">
+      Your cart is empty. <a routerLink="/">Browse the menu</a>.
+    </div>
+  } @else {
+    <div class="cart-list">
+      @for (item of cart.items(); track item.menu.menuId) {
+        <div class="card cart-row">
+          <div class="cart-info">
+            <strong>{{ item.menu.name }}</strong>
+            <span class="muted">{{ item.menu.price | number: '1.0-2' }} MKD each</span>
+          </div>
+          <input
+            type="number"
+            min="1"
+            class="qty-input"
+            [value]="item.quantity"
+            (change)="updateQuantity(item.menu.menuId, $any($event.target).value)"
+          />
+          <span class="line-total">{{ item.menu.price * item.quantity | number: '1.0-2' }} MKD</span>
+          <button class="btn btn-outline btn-sm" (click)="cart.remove(item.menu.menuId)">Remove</button>
+        </div>
+      }
+    </div>
+
+    <div class="card summary">
+      <div class="total-row">
+        <span>Total</span>
+        <strong>{{ cart.totalPrice() | number: '1.0-2' }} MKD</strong>
+      </div>
+
+      <label>Payment method</label>
+      <select [(ngModel)]="paymentMethod">
+        <option [ngValue]="PaymentMethod.Cash">Cash</option>
+        <option [ngValue]="PaymentMethod.Card">Card</option>
+      </select>
+
+      @if (!auth.isLoggedIn()) {
+        <p class="muted">You need to <a routerLink="/login">log in</a> before checking out.</p>
+      }
+
+      <div class="form-actions">
+        <button class="btn" [disabled]="placingOrder()" (click)="checkout()">
+          {{ placingOrder() ? 'Placing order...' : 'Place order' }}
+        </button>
+      </div>
+
+      @if (orderError()) {
+        <p class="error-text">{{ orderError() }}</p>
+      }
+      @if (orderSuccess()) {
+        <p class="success-text">Order placed! Redirecting to your orders...</p>
+      }
+    </div>
+  }
+</div>

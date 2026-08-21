@@ -1,0 +1,53 @@
+@if (error()) {
+  <p class="error-text">{{ error() }}</p>
+}
+
+@if (loading()) {
+  <p class="muted">Loading...</p>
+} @else if (orders().length === 0) {
+  <div class="empty-state">No orders yet.</div>
+} @else {
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Customer</th>
+          <th>Date</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (order of orders(); track order.orderId) {
+          <tr>
+            <td>{{ order.orderId }}</td>
+            <td>{{ order.user?.email ?? order.userId }}</td>
+            <td>{{ order.dateCreated | date: 'short' }}</td>
+            <td>
+              @for (item of order.orderItems; track item.orderItemId) {
+                <div>{{ item.quantity }} x {{ item.menuItem?.name ?? 'Item #' + item.menuId }}</div>
+              }
+            </td>
+            <td>{{ order.price | number: '1.0-2' }} MKD</td>
+            <td>
+              <select
+                [ngModel]="order.orderStatus"
+                (ngModelChange)="changeStatus(order, $event)"
+              >
+                @for (status of statusOptions; track status) {
+                  <option [ngValue]="status">{{ statusLabels[status] }}</option>
+                }
+              </select>
+            </td>
+            <td>
+              <button class="btn btn-danger btn-sm" (click)="remove(order)">Delete</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

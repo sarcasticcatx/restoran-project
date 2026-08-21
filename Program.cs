@@ -47,6 +47,9 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
+    // isklucuvame ja default inbound claim mapping, inaku "role"/"nameid"
+    // pak se prevrtuvaat vo dolgite ClaimTypes.* URI-ja pri validacija
+    options.MapInboundClaims = false;
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
@@ -56,7 +59,10 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+        // se poklopuva so kratkite claim keys od UserService (nameid/email/role)
+        RoleClaimType = "role",
+        NameClaimType = "nameid"
     };
 });
 

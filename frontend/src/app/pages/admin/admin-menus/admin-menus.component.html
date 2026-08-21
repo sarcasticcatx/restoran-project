@@ -1,0 +1,91 @@
+<div class="card add-form">
+  <h3>{{ editingId() ? 'Edit dish' : 'Add dish' }}</h3>
+  <form (ngSubmit)="save()">
+    <label>Name</label>
+    <input
+      type="text"
+      name="name"
+      [ngModel]="form().name"
+      (ngModelChange)="updateForm('name', $event)"
+      required
+    />
+
+    <label>Description</label>
+    <textarea
+      rows="2"
+      name="description"
+      [ngModel]="form().description"
+      (ngModelChange)="updateForm('description', $event)"
+    ></textarea>
+
+    <label>Price (MKD)</label>
+    <input
+      type="number"
+      name="price"
+      min="0"
+      step="0.01"
+      [ngModel]="form().price"
+      (ngModelChange)="updateForm('price', $event)"
+      required
+    />
+
+    <label>Picture URL</label>
+    <input
+      type="text"
+      name="pictureOfFood"
+      [ngModel]="form().pictureOfFood"
+      (ngModelChange)="updateForm('pictureOfFood', $event)"
+      placeholder="https://..."
+    />
+
+    <label>Category</label>
+    <select
+      name="categoryId"
+      [ngModel]="form().categoryId"
+      (ngModelChange)="updateForm('categoryId', $event)"
+      required
+    >
+      <option [ngValue]="undefined" disabled>Select a category</option>
+      @for (cat of categories(); track cat.categoryId) {
+        <option [ngValue]="cat.categoryId">{{ cat.name }}</option>
+      }
+    </select>
+
+    <div class="form-actions">
+      <button class="btn" type="submit">{{ editingId() ? 'Save changes' : 'Add dish' }}</button>
+      @if (editingId()) {
+        <button class="btn btn-outline" type="button" (click)="startCreate()">Cancel</button>
+      }
+    </div>
+
+    @if (error()) {
+      <p class="error-text">{{ error() }}</p>
+    }
+  </form>
+</div>
+
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (menu of menus(); track menu.menuId) {
+        <tr>
+          <td>{{ menu.name }}</td>
+          <td>{{ menu.category?.name }}</td>
+          <td>{{ menu.price | number: '1.0-2' }} MKD</td>
+          <td class="actions">
+            <button class="btn btn-outline btn-sm" (click)="startEdit(menu)">Edit</button>
+            <button class="btn btn-danger btn-sm" (click)="remove(menu)">Delete</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

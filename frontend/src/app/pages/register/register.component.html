@@ -1,0 +1,34 @@
+<div class="container narrow">
+  <div class="card">
+    <h1>Register</h1>
+
+    <form (ngSubmit)="submit()">
+      <label>First name</label>
+      <input type="text" name="firstName" [(ngModel)]="dto.firstName" required />
+
+      <label>Last name</label>
+      <input type="text" name="lastName" [(ngModel)]="dto.lastName" required />
+
+      <label>Email</label>
+      <input type="email" name="email" [(ngModel)]="dto.email" required />
+
+      <label>Password</label>
+      <input type="password" name="password" [(ngModel)]="dto.password" required minlength="8" />
+
+      <div class="form-actions">
+        <button class="btn" type="submit" [disabled]="loading()">
+          {{ loading() ? 'Creating account...' : 'Register' }}
+        </button>
+      </div>
+
+      @if (error()) {
+        <p class="error-text">{{ error() }}</p>
+      }
+      @if (success()) {
+        <p class="success-text">Account created! Redirecting to login...</p>
+      }
+    </form>
+
+    <p class="muted switch-link">Already have an account? <a routerLink="/login">Log in</a></p>
+  </div>
+</div>

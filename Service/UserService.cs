@@ -43,11 +43,13 @@ namespace restoran_project.Service
             var isPasswordValid = await _userManager.CheckPasswordAsync(user, password);
             if (!isPasswordValid) return null;
 
+            // korisni kratki claim keys (nameid/email/role) namesto dolgite
+            // ClaimTypes.* URI-ja, za da bidat lesno citlivi na frontend
             var authClaims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Email, user.Email ?? ""),
-                new Claim(ClaimTypes.Role, user.Role ?? "Customer")
+                new Claim("nameid", user.Id),
+                new Claim("email", user.Email ?? ""),
+                new Claim("role", user.Role ?? "Customer")
             };
 
             var authSigningKey = new SymmetricSecurityKey(

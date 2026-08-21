@@ -1,0 +1,48 @@
+<div class="container">
+  <h1>Our menu</h1>
+
+  <div class="categories">
+    <button
+      class="chip"
+      [class.active]="selectedCategoryId() === null"
+      (click)="selectCategory(null)"
+    >
+      All
+    </button>
+    @for (cat of categories(); track cat.categoryId) {
+      <button
+        class="chip"
+        [class.active]="selectedCategoryId() === cat.categoryId"
+        (click)="selectCategory(cat.categoryId)"
+      >
+        {{ cat.name }}
+      </button>
+    }
+  </div>
+
+  @if (loading()) {
+    <p class="muted">Loading menu...</p>
+  } @else if (menus().length === 0) {
+    <div class="empty-state">No dishes found for this category.</div>
+  } @else {
+    <div class="menu-grid">
+      @for (menu of menus(); track menu.menuId) {
+        <a class="card menu-card" [routerLink]="['/menu', menu.menuId]">
+          @if (menu.pictureOfFood) {
+            <img [src]="menu.pictureOfFood" [alt]="menu.name" class="menu-img" />
+          } @else {
+            <div class="menu-img placeholder">🍲</div>
+          }
+          <div class="menu-body">
+            <h3>{{ menu.name }}</h3>
+            <p class="muted description">{{ menu.description }}</p>
+            <div class="menu-footer">
+              <span class="price">{{ menu.price | number: '1.0-2' }} MKD</span>
+              <button class="btn btn-sm" (click)="addToCart(menu, $event)">Add to cart</button>
+            </div>
+          </div>
+        </a>
+      }
+    </div>
+  }
+</div>

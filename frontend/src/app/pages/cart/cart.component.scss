@@ -1,0 +1,38 @@
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.cart-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cart-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.qty-input {
+  width: 70px;
+}
+
+.line-total {
+  width: 110px;
+  text-align: right;
+  font-weight: 600;
+}
+
+.summary {
+  max-width: 380px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+}

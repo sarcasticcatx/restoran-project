@@ -1,0 +1,17 @@
+.admin-tabs {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+.admin-tabs a {
+  padding-bottom: 0.6rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.admin-tabs a.active {
+  color: var(--primary);
+  border-bottom: 2px solid var(--primary);
+}

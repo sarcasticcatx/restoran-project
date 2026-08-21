@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace restoran_project.Models
 {
@@ -22,8 +21,6 @@ namespace restoran_project.Models
         [Required]
         public int CategoryId { get; set; }
 
-        
-        [JsonIgnore]
         public Category? Category { get; set; }
     }
 }

@@ -1,0 +1,74 @@
+<div class="container">
+  <a routerLink="/" class="back-link">&larr; Back to menu</a>
+
+  @if (loading()) {
+    <p class="muted">Loading...</p>
+  } @else if (!menu()) {
+    <div class="empty-state">Dish not found.</div>
+  } @else {
+    <div class="detail card">
+      @if (menu()!.pictureOfFood) {
+        <img [src]="menu()!.pictureOfFood" [alt]="menu()!.name" class="detail-img" />
+      }
+      <div class="detail-body">
+        <span class="badge">{{ menu()!.category?.name }}</span>
+        <h1>{{ menu()!.name }}</h1>
+        <p class="muted">{{ menu()!.description }}</p>
+        <p class="price">{{ menu()!.price | number: '1.0-2' }} MKD</p>
+
+        <div class="qty-row">
+          <button class="btn btn-outline btn-sm" (click)="changeQuantity(-1)">-</button>
+          <span>{{ quantity() }}</span>
+          <button class="btn btn-outline btn-sm" (click)="changeQuantity(1)">+</button>
+          <button class="btn" (click)="addToCart()">Add to cart</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="reviews">
+      <h2>Reviews</h2>
+
+      @if (reviews().length === 0) {
+        <p class="muted">No reviews yet.</p>
+      } @else {
+        <div class="review-list">
+          @for (review of reviews(); track review.reviewId) {
+            <div class="card review-item">
+              <div class="review-head">
+                <strong>{{ review.user?.firstName || review.user?.email || 'Anonymous' }}</strong>
+                <span class="stars">{{ '★'.repeat(review.rating) }}{{ '☆'.repeat(5 - review.rating) }}</span>
+              </div>
+              <p>{{ review.comment }}</p>
+            </div>
+          }
+        </div>
+      }
+
+      @if (auth.isLoggedIn()) {
+        <div class="card new-review">
+          <h3>Leave a review</h3>
+          <label>Rating</label>
+          <select [(ngModel)]="newRating">
+            @for (n of [5, 4, 3, 2, 1]; track n) {
+              <option [value]="n">{{ n }} star{{ n > 1 ? 's' : '' }}</option>
+            }
+          </select>
+
+          <label>Comment</label>
+          <textarea rows="3" [(ngModel)]="newComment" placeholder="What did you think?"></textarea>
+
+          <div class="form-actions">
+            <button class="btn" [disabled]="submitting || !newComment" (click)="submitReview()">
+              Submit review
+            </button>
+          </div>
+          @if (submitError) {
+            <p class="error-text">{{ submitError }}</p>
+          }
+        </div>
+      } @else {
+        <p class="muted"><a routerLink="/login">Log in</a> to leave a review.</p>
+      }
+    </section>
+  }
+</div>

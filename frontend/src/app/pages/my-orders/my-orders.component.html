@@ -1,0 +1,39 @@
+<div class="container">
+  <h1>My orders</h1>
+
+  @if (loading()) {
+    <p class="muted">Loading...</p>
+  } @else if (orders().length === 0) {
+    <div class="empty-state">You haven't placed any orders yet.</div>
+  } @else {
+    <div class="order-list">
+      @for (order of orders(); track order.orderId) {
+        <div class="card order-card">
+          <div class="order-head">
+            <div>
+              <strong>Order #{{ order.orderId }}</strong>
+              <span class="muted">{{ order.dateCreated | date: 'medium' }}</span>
+            </div>
+            <span class="badge" [ngClass]="statusClass(order.orderStatus)">
+              {{ statusLabels[order.orderStatus ?? 0] }}
+            </span>
+          </div>
+
+          <ul class="item-list">
+            @for (item of order.orderItems; track item.orderItemId) {
+              <li>
+                {{ item.quantity }} x {{ item.menuItem?.name ?? 'Item #' + item.menuId }}
+                <span class="muted">({{ item.price | number: '1.0-2' }} MKD each)</span>
+              </li>
+            }
+          </ul>
+
+          <div class="order-footer">
+            <span class="muted">Payment: {{ order.paymentMethod === 0 ? 'Cash' : 'Card' }}</span>
+            <strong>{{ order.price | number: '1.0-2' }} MKD</strong>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

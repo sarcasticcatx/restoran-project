@@ -1,0 +1,28 @@
+<header class="navbar">
+  <div class="navbar-inner">
+    <a routerLink="/" class="brand">🍽️ Restoran</a>
+
+    <nav class="links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Menu</a>
+      <a routerLink="/cart" routerLinkActive="active">Cart ({{ cart.totalCount() }})</a>
+
+      @if (auth.isLoggedIn()) {
+        <a routerLink="/orders" routerLinkActive="active">My orders</a>
+      }
+
+      @if (auth.isAdmin()) {
+        <a routerLink="/admin" routerLinkActive="active">Admin</a>
+      }
+    </nav>
+
+    <div class="account">
+      @if (auth.isLoggedIn()) {
+        <span class="muted">{{ auth.currentUser()?.email }}</span>
+        <button class="btn btn-outline btn-sm" (click)="logout()">Logout</button>
+      } @else {
+        <a routerLink="/login" class="btn btn-outline btn-sm">Login</a>
+        <a routerLink="/register" class="btn btn-sm">Register</a>
+      }
+    </div>
+  </div>
+</header>

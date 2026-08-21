@@ -1,0 +1,48 @@
+<div class="card add-form">
+  <h3>Add category</h3>
+  <form (ngSubmit)="add()">
+    <input type="text" name="newName" [(ngModel)]="newName" placeholder="Category name" required />
+    <div class="form-actions">
+      <button class="btn" type="submit">Add</button>
+    </div>
+  </form>
+</div>
+
+@if (error()) {
+  <p class="error-text">{{ error() }}</p>
+}
+
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (cat of categories(); track cat.categoryId) {
+        <tr>
+          <td>{{ cat.categoryId }}</td>
+          <td>
+            @if (editingId() === cat.categoryId) {
+              <input type="text" [(ngModel)]="editingName" [name]="'edit-' + cat.categoryId" />
+            } @else {
+              {{ cat.name }}
+            }
+          </td>
+          <td class="actions">
+            @if (editingId() === cat.categoryId) {
+              <button class="btn btn-sm" (click)="saveEdit(cat)">Save</button>
+              <button class="btn btn-outline btn-sm" (click)="cancelEdit()">Cancel</button>
+            } @else {
+              <button class="btn btn-outline btn-sm" (click)="startEdit(cat)">Edit</button>
+              <button class="btn btn-danger btn-sm" (click)="remove(cat)">Delete</button>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

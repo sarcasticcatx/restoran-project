@@ -1,0 +1,44 @@
+.navbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.links {
+  display: flex;
+  gap: 1.25rem;
+  flex: 1;
+}
+
+.links a {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.links a.active {
+  color: var(--primary);
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}

@@ -1,0 +1,25 @@
+<div class="container narrow">
+  <div class="card">
+    <h1>Log in</h1>
+
+    <form (ngSubmit)="submit()">
+      <label>Email</label>
+      <input type="email" name="email" [(ngModel)]="email" required />
+
+      <label>Password</label>
+      <input type="password" name="password" [(ngModel)]="password" required />
+
+      <div class="form-actions">
+        <button class="btn" type="submit" [disabled]="loading()">
+          {{ loading() ? 'Logging in...' : 'Log in' }}
+        </button>
+      </div>
+
+      @if (error()) {
+        <p class="error-text">{{ error() }}</p>
+      }
+    </form>
+
+    <p class="muted switch-link">No account yet? <a routerLink="/register">Register</a></p>
+  </div>
+</div>
