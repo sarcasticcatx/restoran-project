@@ -6,6 +6,8 @@
 # local dev tooling config (not part of the app)
 .claude/
 
+
+
 # dotenv files
 .env
 

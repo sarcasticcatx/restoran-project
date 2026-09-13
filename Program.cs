@@ -18,9 +18,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.AllowAnyOrigin()
+            policy.WithOrigins("http://localhost:4200") // URL-to na Angular
                   .AllowAnyMethod()
-                  .AllowAnyHeader();
+                  .AllowAnyHeader()
+                  .AllowCredentials(); // Zadolzitelno za cookies!
         });
 });
 
@@ -64,6 +65,19 @@ builder.Services.AddAuthentication(options =>
         RoleClaimType = "role",
         NameClaimType = "nameid"
     };
+
+    // Citaj go JWT tokenot od cookie ako postoi
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            if (context.Request.Cookies.ContainsKey("X-Access-Token"))
+            {
+                context.Token = context.Request.Cookies["X-Access-Token"];
+            }
+            return Task.CompletedTask;
+        }
+    };
 });
 
 // servisite
@@ -92,17 +106,16 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
 }
-app.UseStaticFiles();
 
+app.UseStaticFiles();
 
 app.UseCors("AllowFrontend");
 
 app.UseRouting();
 
-
 app.UseAuthentication();
-app.UseAuthorization();
 
+app.UseAuthorization();
 
 app.MapControllers();
 

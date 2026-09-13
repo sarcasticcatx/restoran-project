@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+
+
 namespace restoran_project.Models
 {
     public class Menu

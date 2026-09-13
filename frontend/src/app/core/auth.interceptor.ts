@@ -1,14 +1,12 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { AuthService } from './auth.service';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = inject(AuthService).getToken();
-  if (!token) return next(req);
+  export const authInterceptor: HttpInterceptorFn = (req, next) => {
+    // avtomatski da se isprakjaat cookies so sekoe baranje
+    // go dodadov ova posho samo dve linii se.
+    const authReq = req.clone({
+      withCredentials: true
+    });
 
-  return next(
-    req.clone({
-      setHeaders: { Authorization: `Bearer ${token}` }
-    })
-  );
-};
+    return next(authReq);
+  };
+
