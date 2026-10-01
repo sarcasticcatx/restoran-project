@@ -3,7 +3,7 @@
 
   @if (cart.items().length === 0) {
     <div class="empty-state">
-      Your cart is empty. <a routerLink="/">Browse the menu</a>.
+      Your cart is empty. <a routerLink="/menu">Browse the menu</a>.
     </div>
   } @else {
     <div class="cart-list">
@@ -32,19 +32,13 @@
         <strong>{{ cart.totalPrice() | number: '1.0-2' }} EUR</strong>
       </div>
 
-      <label>Payment method</label>
-      <select [(ngModel)]="paymentMethod">
-        <option [ngValue]="PaymentMethod.Cash">Cash</option>
-        <option [ngValue]="PaymentMethod.Card">Card</option>
-      </select>
-
       @if (!auth.isLoggedIn()) {
         <p class="muted">You need to <a routerLink="/login">log in</a> before checking out.</p>
       }
 
       <div class="form-actions">
-        <button class="btn" [disabled]="placingOrder()" (click)="checkout()">
-          {{ placingOrder() ? 'Placing order...' : 'Place order' }}
+        <button class="btn btn-pay" [disabled]="placingOrder()" (click)="checkout()">
+          {{ placingOrder() ? 'Processing…' : 'Pay now' }}
         </button>
       </div>
 

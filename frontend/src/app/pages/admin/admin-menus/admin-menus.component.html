@@ -18,7 +18,7 @@
       (ngModelChange)="updateForm('description', $event)"
     ></textarea>
 
-    <label>Price (MKD)</label>
+    <label>Price (EUR)</label>
     <input
       type="number"
       name="price"
@@ -79,7 +79,7 @@
         <tr>
           <td>{{ menu.name }}</td>
           <td>{{ menu.category?.name }}</td>
-          <td>{{ menu.price | number: '1.0-2' }} MKD</td>
+          <td>{{ menu.price | number: '1.0-2' }} EUR</td>
           <td class="actions">
             <button class="btn btn-outline btn-sm" (click)="startEdit(menu)">Edit</button>
             <button class="btn btn-danger btn-sm" (click)="remove(menu)">Delete</button>

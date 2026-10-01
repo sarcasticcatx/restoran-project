@@ -23,14 +23,14 @@
             @for (item of order.orderItems; track item.orderItemId) {
               <li>
                 {{ item.quantity }} x {{ item.menuItem?.name ?? 'Item #' + item.menuId }}
-                <span class="muted">({{ item.price | number: '1.0-2' }} MKD each)</span>
+                <span class="muted">({{ item.price | number: '1.0-2' }} EUR each)</span>
               </li>
             }
           </ul>
 
           <div class="order-footer">
             <span class="muted">Payment: {{ order.paymentMethod === 0 ? 'Cash' : 'Card' }}</span>
-            <strong>{{ order.price | number: '1.0-2' }} MKD</strong>
+            <strong>{{ order.price | number: '1.0-2' }} EUR</strong>
           </div>
         </div>
       }

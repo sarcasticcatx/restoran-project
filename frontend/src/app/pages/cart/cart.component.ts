@@ -15,9 +15,6 @@ import { Order, OrderItem, PaymentMethod } from '../../models/order.model';
   styleUrl: './cart.component.scss'
 })
 export class CartComponent {
-  paymentMethod: PaymentMethod = PaymentMethod.Cash;
-  PaymentMethod = PaymentMethod;
-
   placingOrder = signal(false);
   orderError = signal('');
   orderSuccess = signal(false);
@@ -51,7 +48,7 @@ export class CartComponent {
 
     const order: Order = {
       userId: user.id,
-      paymentMethod: this.paymentMethod,
+      paymentMethod: PaymentMethod.Card,
       orderItems
     };
 

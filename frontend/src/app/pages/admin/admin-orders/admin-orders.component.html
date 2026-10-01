@@ -31,7 +31,7 @@
                 <div>{{ item.quantity }} x {{ item.menuItem?.name ?? 'Item #' + item.menuId }}</div>
               }
             </td>
-            <td>{{ order.price | number: '1.0-2' }} MKD</td>
+            <td>{{ order.price | number: '1.0-2' }} EUR</td>
             <td>
               <select
                 [ngModel]="order.orderStatus"

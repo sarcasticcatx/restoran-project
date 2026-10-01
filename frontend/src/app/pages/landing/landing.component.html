@@ -1,0 +1,67 @@
+<section class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Welcome to</span>
+    <h1>Restoran</h1>
+    <p class="tagline">
+      Honest food, made fresh every day. Order online and have your favorites delivered
+      straight to your door.
+    </p>
+    <div class="hero-actions">
+      <a routerLink="/menu" class="btn btn-hero">Browse the menu</a>
+      @if (!auth.isLoggedIn()) {
+        <a routerLink="/register" class="btn btn-outline btn-hero btn-hero-outline">Create account</a>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="container features">
+  <div class="feature">
+    <div class="feature-icon">🥘</div>
+    <h3>Fresh ingredients</h3>
+    <p class="muted">Every dish is cooked to order with ingredients sourced daily.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🚚</div>
+    <h3>Fast delivery</h3>
+    <p class="muted">Track your order from the kitchen to your doorstep.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">⭐</div>
+    <h3>Loved by our guests</h3>
+    <p class="muted">Real reviews from real customers on every dish.</p>
+  </div>
+</section>
+
+@if (featured().length > 0) {
+  <section class="container popular">
+    <div class="popular-head">
+      <h2>Popular right now</h2>
+      <a routerLink="/menu" class="see-all">See full menu &rarr;</a>
+    </div>
+
+    <div class="popular-grid">
+      @for (menu of featured(); track menu.menuId) {
+        <a class="card popular-card" [routerLink]="['/menu', menu.menuId]">
+          @if (menu.pictureOfFood) {
+            <img [src]="menu.pictureOfFood" [alt]="menu.name" class="popular-img" />
+          } @else {
+            <div class="popular-img placeholder">🍲</div>
+          }
+          <div class="popular-body">
+            <h4>{{ menu.name }}</h4>
+            <span class="price">{{ menu.price | number: '1.0-2' }} EUR</span>
+          </div>
+        </a>
+      }
+    </div>
+  </section>
+}
+
+<section class="cta">
+  <div class="cta-inner">
+    <h2>Hungry already?</h2>
+    <p class="muted">Pick your favorites and have them on the table in no time.</p>
+    <a routerLink="/menu" class="btn btn-hero">Order now</a>
+  </div>
+</section>

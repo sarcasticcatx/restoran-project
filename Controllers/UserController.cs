@@ -52,7 +52,7 @@ namespace restoran_project.Controllers
             };
 
             // 3. Запишување на токенот во Cookie
-            Response.Cookies.Append("X-Access-Token", token, cookieOptions);
+            Response.Cookies.Append("x-access", token, cookieOptions);
 
             return Ok(new { message = "Успешна најава!" });
         }
@@ -88,7 +88,7 @@ namespace restoran_project.Controllers
                 SameSite = SameSiteMode.Strict
             };
 
-            Response.Cookies.Delete("X-Access-Token", cookieOptions);
+            Response.Cookies.Delete("x-access", cookieOptions);
             return Ok(new { message = "Успешна одјава!" });
         }
 
