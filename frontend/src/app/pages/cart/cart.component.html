@@ -11,7 +11,7 @@
         <div class="card cart-row">
           <div class="cart-info">
             <strong>{{ item.menu.name }}</strong>
-            <span class="muted">{{ item.menu.price | number: '1.0-2' }} MKD each</span>
+            <span class="muted">{{ item.menu.price | number: '1.0-2' }} EUR each</span>
           </div>
           <input
             type="number"
@@ -20,7 +20,7 @@
             [value]="item.quantity"
             (change)="updateQuantity(item.menu.menuId, $any($event.target).value)"
           />
-          <span class="line-total">{{ item.menu.price * item.quantity | number: '1.0-2' }} MKD</span>
+          <span class="line-total">{{ item.menu.price * item.quantity | number: '1.0-2' }} EUR</span>
           <button class="btn btn-outline btn-sm" (click)="cart.remove(item.menu.menuId)">Remove</button>
         </div>
       }
@@ -29,7 +29,7 @@
     <div class="card summary">
       <div class="total-row">
         <span>Total</span>
-        <strong>{{ cart.totalPrice() | number: '1.0-2' }} MKD</strong>
+        <strong>{{ cart.totalPrice() | number: '1.0-2' }} EUR</strong>
       </div>
 
       <label>Payment method</label>

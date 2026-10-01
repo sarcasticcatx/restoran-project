@@ -19,11 +19,12 @@ export class LoginComponent {
   constructor(
     private auth: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   submit(): void {
     this.error.set('');
     this.loading.set(true);
+
     this.auth.login(this.email, this.password).subscribe({
       next: () => {
         this.loading.set(false);
@@ -31,7 +32,14 @@ export class LoginComponent {
       },
       error: (err) => {
         this.loading.set(false);
-        this.error.set(err?.error ?? 'Login failed.');
+
+        
+        const message = err?.error?.message
+          || err?.error?.title
+          || (typeof err?.error === 'string' ? err.error : null)
+          || 'Invalid email or password.';
+
+        this.error.set(message);
       }
     });
   }

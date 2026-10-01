@@ -67,13 +67,26 @@ builder.Services.AddAuthentication(options =>
     };
 
     // Citaj go JWT tokenot od cookie ako postoi
+    //options.Events = new JwtBearerEvents
+    //{
+    //    OnMessageReceived = context =>
+    //    {
+    //        if (context.Request.Cookies.ContainsKey("X-Access-Token"))
+    //        {
+    //            context.Token = context.Request.Cookies["X-Access-Token"];
+    //        }
+    //        return Task.CompletedTask;
+    //    }
+    //};
+
     options.Events = new JwtBearerEvents
     {
         OnMessageReceived = context =>
         {
-            if (context.Request.Cookies.ContainsKey("X-Access-Token"))
+            // 1. Прво проверува дали токенот е во Cookie-то "x-access"
+            if (context.Request.Cookies.TryGetValue("x-access", out var tokenFromCookie))
             {
-                context.Token = context.Request.Cookies["X-Access-Token"];
+                context.Token = tokenFromCookie;
             }
             return Task.CompletedTask;
         }
