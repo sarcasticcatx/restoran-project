@@ -3,15 +3,15 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    cpus: 0.5
-    mem_limit: 512m
+    cpus: 0.25
+    mem_limit: 256m
 
   backend:
     build:
       context: .
       dockerfile: Dockerfile
-    cpus: 0.5
-    mem_limit: 512m
+    cpus: 0.25
+    mem_limit: 256m
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
