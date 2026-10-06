@@ -1,4 +1,4 @@
- servicservices:
+services:
   frontend:
     build:
       context: ./frontend
@@ -8,7 +8,7 @@
 
   backend:
     build:
-      context: ./backend
+      context: .
       dockerfile: Dockerfile
     cpus: 0.5
     mem_limit: 512m
