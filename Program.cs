@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200") // URL-to na Angular
+            policy.WithOrigins("https://team-142--delovna2526.reporun.finki.net.mk") 
                   .AllowAnyMethod()
                   .AllowAnyHeader()
                   .AllowCredentials(); // Zadolzitelno za cookies!
@@ -118,6 +118,11 @@ else
 if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
 }
 
 app.UseStaticFiles();
