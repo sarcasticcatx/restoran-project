@@ -2,7 +2,7 @@ version: 1
 ingress:
   - name: app
     service: frontend
-    port: 4200
+    port: 80
     primary: true
     access:
       type: team
