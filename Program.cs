@@ -37,7 +37,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         $"Database={builder.Configuration["DB_NAME"]}; " +
         $"Username={builder.Configuration["DB_USERNAME"]}; " +
         $"Password={builder.Configuration["DB_PASSWORD"]}; " +
-        "SSL Mode=Prefer;"));
+        "SSL Mode=Prefer; Trust Server Certificate=true;"));
 
 //  za user
 builder.Services.AddIdentity<User, IdentityRole>(options =>
@@ -132,7 +132,15 @@ else
 
 using (var scope = app.Services.CreateScope())
 {
-    scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        db.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Грешка при конекција со базата: {ex.Message}");
+    }
 }
 
 app.MapGet("/health", () => Results.Ok());
