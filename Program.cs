@@ -26,9 +26,18 @@ builder.Services.AddCors(options =>
         });
 });
 
+// keep just in case smth goes wrong
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 //  baza
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(
+        $"Host={builder.Configuration["DB_HOST"]}; " +
+        $"Database={builder.Configuration["DB_NAME"]}; " +
+        $"Username={builder.Configuration["DB_USERNAME"]}; " +
+        $"Password={builder.Configuration["DB_PASSWORD"]}; " +
+        "SSL Mode=Prefer;"));
 
 //  za user
 builder.Services.AddIdentity<User, IdentityRole>(options =>
@@ -116,15 +125,17 @@ else
     app.UseHsts();
 }
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseHttpsRedirection();
-}
+//if (!app.Environment.IsDevelopment())
+//{
+//    app.UseHttpsRedirection();
+//}
 
 using (var scope = app.Services.CreateScope())
 {
     scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
 }
+
+app.MapGet("/health", () => Results.Ok());
 
 app.UseStaticFiles();
 
