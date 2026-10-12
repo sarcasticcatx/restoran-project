@@ -3,6 +3,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    ports:
+      - "4200:80"   # Maps port 4200 on your PC to port 80 in the frontend container
     cpus: 0.25
     mem_limit: 256m
 
@@ -10,13 +12,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Maps port 8080 on your PC to port 8080 in the backend container
     cpus: 0.25
     mem_limit: 256m
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
+      - ConnectionStrings__DefaultConnection=${ConnectionStrings__DefaultConnection}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s

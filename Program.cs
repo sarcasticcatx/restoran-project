@@ -19,7 +19,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("https://team-142--delovna2526.reporun.finki.net.mk") 
+            policy.WithOrigins("https://team-142--delovna2526.reporun.finki.net.mk", "http://localhost:4200") 
                   .AllowAnyMethod()
                   .AllowAnyHeader()
                   .AllowCredentials(); // Zadolzitelno za cookies!
@@ -147,9 +147,9 @@ app.MapGet("/health", () => Results.Ok());
 
 app.UseStaticFiles();
 
-app.UseCors("AllowFrontend");
-
 app.UseRouting();
+
+app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
 
