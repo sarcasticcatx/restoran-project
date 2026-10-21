@@ -5,7 +5,7 @@ ingress:
     port: 80
     primary: true
     access:
-      type: team
+      type: cas
   - name: api
     service: backend
     port: 8080
